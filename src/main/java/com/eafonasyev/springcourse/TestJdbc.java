@@ -16,6 +16,7 @@ public class TestJdbc {
                  addAnnotatedClass(Instractor.class).
                  addAnnotatedClass(InstractorDetail.class).
                  addAnnotatedClass(Courses.class).
+                 addAnnotatedClass(Review.class).
                  buildSessionFactory();
 
      Session session = factory.getCurrentSession();
@@ -23,16 +24,13 @@ public class TestJdbc {
         try {
 
             session.beginTransaction();
-            int id = 5;
-            Query<Instractor> query = session.createQuery("select i from Instractor i "+
-                                                           "where i.id = :instractor_id",
-                                                           Instractor.class
-                                                          );
-            query.setParameter("instractor_id",id);
-            System.out.println("Done!!!");
-            Instractor instractor = query.getSingleResult();
-            System.out.println("Done!!!");
-            System.out.println(instractor);
+            int id = 22;
+
+            Courses courses = session.get(Courses.class,id);
+
+
+            session.delete(courses);
+
 
             session.getTransaction().commit();
             System.out.println("Done!!!");

@@ -2,6 +2,8 @@ package com.eafonasyev.springcourse.entity;
 
 import javax.persistence.*;
 import javax.print.attribute.standard.MediaSize;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "cources")
@@ -25,6 +27,17 @@ public class Courses {
     @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "instractor_id")
     private Instractor instractorId;
+
+    @OneToMany(cascade = CascadeType.ALL,
+               fetch = FetchType.LAZY)
+    @JoinColumn(name = "courses_id")
+    private List<Review> reviews;
+
+    public void  add(Review reviews){
+        if(this.reviews == null)
+            this.reviews = new ArrayList<>();
+        this.reviews.add(reviews);
+    }
 
     public int getId() {
         return id;
