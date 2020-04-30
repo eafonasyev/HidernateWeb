@@ -1,6 +1,8 @@
 package com.eafonasyev.springcourse.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
@@ -29,7 +31,27 @@ public class Student {
     @Column(name = "email")
     private String email;
 
+    @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "student_id"),
 
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Courses> courses;
+
+    public void addCources(Courses courses){
+        if(this.courses == null)
+            this.courses = new ArrayList<>();
+        this.courses.add(courses);
+    }
+
+    public List<Courses> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Courses> courses) {
+        this.courses = courses;
+    }
 
     public void setId(int id) {
         this.id = id;

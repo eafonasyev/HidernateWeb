@@ -33,10 +33,39 @@ public class Courses {
     @JoinColumn(name = "courses_id")
     private List<Review> reviews;
 
+    @ManyToMany
+    @JoinTable(
+            name = "course_4_student",
+            joinColumns  = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<Student> students;
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
     public void  add(Review reviews){
         if(this.reviews == null)
             this.reviews = new ArrayList<>();
         this.reviews.add(reviews);
+    }
+    public void addStudent(Student student){
+        if(this.students == null)
+            students = new ArrayList<>();
+        this.students.add(student);
     }
 
     public int getId() {
